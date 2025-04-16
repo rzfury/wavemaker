@@ -20,17 +20,17 @@ export default function useLFOControlManager() {
     const controlCopies: [string, ControlState][] = [];
     Object.entries(lfoCopies).forEach(([_, lfo]) => {
       lfo.controls.forEach(lfoControl => {
-        if (lfoControl.bypass) return;
-
         controlCopies.push([lfoControl.id, { ...controls[lfoControl.id] }]);
         controlCopies[controlCopies.length - 1][1].value = controlCopies[controlCopies.length - 1][1].valueMap(
           mapRange(
-            lfo.current.amount,
+            lfoControl.direction === 'backward'
+              ? (1.0 - lfo.current.amount)
+              : lfo.current.amount,
             0.0,
             1.0,
             controlCopies[controlCopies.length - 1][1].rangeMin,
-            controlCopies[controlCopies.length - 1][1].rangeMax
-          )
+            controlCopies[controlCopies.length - 1][1].rangeMax,
+          ),
         );
       });
     });

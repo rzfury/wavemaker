@@ -6,6 +6,21 @@ type Nil<T> = T | null | undefined
 type Fn<T = void> = () => T
 type Primitive = string | number | boolean
 
+type SaveDataPatch = {
+  oscillators: { [key: string]: OscillatorState },
+  controls: { [key: string]: ControlState },
+  effects: { [key: string]: EffectState },
+  lfos: { [key: string]: LFOState },
+}
+
+type RouteState = {
+  sourceOscId: string,
+  destinationType: 'master' | 'fx-mixer',
+  destinationPort: number,
+  destinationId: string,
+  level: number,
+}
+
 type OscillatorState = {
   id: string,
   wave: 'sine' | 'pulse' | 'triangle' | 'saw',
@@ -24,7 +39,9 @@ type OscillatorState = {
 type EffectState = {
   id: string,
   oscillator: string,
-  function: (samples: number[]) => number[]
+  controls: { [key: string]: string },
+  bypass: boolean,
+  type: 'reverse' | 'gain' | 'filter-1' | 'fm' | 'delay'
 }
 
 type ControlState = {
@@ -39,7 +56,11 @@ type ControlState = {
 type LFOState = {
   id: string,
   nodes: { amount: number, time: number }[],
-  controls: { id: string, bypass: boolean }[],
+  controls: {
+    id: string,
+    direction: 'forward' | 'backward',
+  }[],
   current: { amount: number, time: number },
+  rate: number,
   edgeNode: { amount: number, },
 }

@@ -11,11 +11,17 @@ function App() {
       <AudioPlayerProvider>
         <main>
           <WaveShelf />
-          <div id="preview" className="flex flex-col gap-y-4 p-4">
+          <div id="preview" className="flex flex-col justify-between gap-y-4 p-4">
             <MasterWavePreview />
+            <div className="flex flex-col gap-y-4 p-4 bg-zinc-800 shadow-md shadow-black/50">
+              <div className="text-zinc-200">
+                <span className="font-thin text-4xl italic">WaveMaker</span>
+                <span className="text-4xl">&nbsp;</span>
+                <small className="">by RZFury</small>
+              </div>
+            </div>
           </div>
           <LFOShelf />
-          <div id="mixer"></div>
         </main>
         <Dialog />
       </AudioPlayerProvider>

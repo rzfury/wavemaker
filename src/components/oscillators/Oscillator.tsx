@@ -3,10 +3,10 @@ import { useDialog } from '~/hooks/useDialog';
 import { useNanoState } from '~/hooks/useNanoState';
 import { atomControls, atomOscillators } from '~/stores/context';
 import { generateOscBase } from '~/wavegen';
-import { clamp } from '../../common';
+import { clamp, SAMPLE_RATE } from '../../common';
+import Control from '../common/Control';
 import WaveRender from '../common/WaveRender';
 import ConnectLFODialog from '../dialogs/ConnectLFODialog';
-import Control from '../common/Control';
 
 export default function Oscillator({ id }: { id: string }) {
 
@@ -41,7 +41,7 @@ export default function Oscillator({ id }: { id: string }) {
     dialog.open({
       title: 'Connect Control to LFO',
       template: <ConnectLFODialog controlId={controlId} />,
-      width: 320,
+      width: 720
     });
   }
 
@@ -50,7 +50,7 @@ export default function Oscillator({ id }: { id: string }) {
   };
 
   return (
-    <div className="h-full flex flex-col border border-zinc-600 overflow-hidden">
+    <div className="w-[520px] min-w-[520px] h-full flex flex-col border border-zinc-600 overflow-hidden">
       <div className="pl-1 flex justify-between bg-zinc-600">
         <div className="mb-0.5 text-xs text-zinc-200">Oscillator [{oscillator.id}]</div>
         <div className="flex gap-x-1">
@@ -59,7 +59,7 @@ export default function Oscillator({ id }: { id: string }) {
       </div>
       <div className="grow flex bg-zinc-700">
         <div className="w-[280px] h-full">
-          <WaveRender samples={generateOscBase(oscillator, controls)} />
+          <WaveRender samples={generateOscBase(SAMPLE_RATE, oscillator, controls)} />
         </div>
         <div className="grow pl-2">
           <div className="flex items-center justify-between gap-x-2">

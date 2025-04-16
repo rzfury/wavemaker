@@ -33,6 +33,7 @@ export function createLFOState(id: string): LFOState {
     },
     edgeNode: {
       amount: 0.0,
-    }
+    },
+    rate: 1,
   };
 }

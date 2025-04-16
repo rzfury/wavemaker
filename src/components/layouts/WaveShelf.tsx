@@ -1,7 +1,7 @@
 import { useNanoState } from '~/hooks/useNanoState';
 import { atomControls, atomOscillators, atomOscillatorSamples } from '~/stores/context';
 import WaveRack from './WaveRack';
-import { randstr, round } from '~/common';
+import { randstr, round, SAMPLE_RATE } from '~/common';
 import { createControlState, createOscillatorState } from '~/generator';
 import { generateOscBase } from '~/wavegen';
 
@@ -64,13 +64,17 @@ export default function WaveShelf() {
 
     atomOscillatorSamples.set({
       ...samples,
-      [oscillator.id]: generateOscBase(oscillator, {
-        [controlMul.id]: controlMul,
-        [controlPhase.id]: controlPhase,
-        [controlAmp.id]: controlAmp,
-        [controlDuty.id]: controlDuty,
-        [controlVol.id]: controlVol,
-      })
+      [oscillator.id]: generateOscBase(
+        SAMPLE_RATE,
+        oscillator,
+        {
+          [controlMul.id]: controlMul,
+          [controlPhase.id]: controlPhase,
+          [controlAmp.id]: controlAmp,
+          [controlDuty.id]: controlDuty,
+          [controlVol.id]: controlVol,
+        }
+      )
     });
     await Promise.resolve();
   };

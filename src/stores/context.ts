@@ -19,8 +19,8 @@ export const getOscSamples = (id: string) => atomOscillatorSamples.get()[id];
 
 export const getLFO = (id: string) => atomLFOs.get()[id];
 
-export const getMasterMix = computed([atomOscillators, atomControls], (oscs, controls) => {
-  return generateMasterMix(oscs, controls);
+export const getMasterMix = computed([atomOscillators, atomControls, atomEffects], (oscs, controls, effects) => {
+  return generateMasterMix(SAMPLE_RATE, oscs, controls, effects);
 });
 
 export const getMasterMixF32 = computed([getMasterMix], (from) => {
